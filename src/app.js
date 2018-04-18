@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'react-dates/initialize';
 import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import AppRouter from './routers/AppRouter';
