@@ -5,35 +5,23 @@ import getExpensesTotal from '../selectors/expenses-total';
 import getVisibleExpenses from '../selectors/expenses';
 
 
-export class ExpensesSummary extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      expensesTotal: this.props.expensesTotal,
-      expensesNumber: this.props.expenses.length
-    }
-  }
-  componentDidMount() {
-    var formattedTotal = numeral(this.props.expensesTotal / 100).format('$0,0.00')
+export const ExpensesSummary = ({ expensesTotal, expenseCount }) => (
+  <div>
+    <h3>Showing {expenseCount === 1 ? `${expenseCount} expense` :`${expenseCount} expenses` } with a total of {numeral(expensesTotal / 100).format('$0,0.00')}</h3>
+  </div>
+)
 
-    this.setState(() => ({ expensesTotal: formattedTotal, expensesNumber: this.props.expenses.length }))
-  }
 
-  render() {
-    return (
-      <div>
-        <p>Showing {this.state.expensesNumber === 1 ? `${this.state.expensesNumber} expense` :`${this.state.expensesNumber} expenses` } with a total of {this.state.expensesTotal}</p>
-      </div>
-    )
-  }
-};
+
+
+
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
   return {
-    expenses: getVisibleExpenses(state.expenses, state.filters),
-    expensesTotal: getExpensesTotal(state.expenses)
-  }
+    expenseCount: visibleExpenses.length,
+    expensesTotal: getExpensesTotal(visibleExpenses)
+  };
 };
 
 export default connect(mapStateToProps)(ExpensesSummary);
