@@ -56,6 +56,8 @@ export class ExpenseListFilters extends React.Component {
           showClearDates={true}
           numberOfMonths={1}
           isOutsideRange={() => false}
+          startDateId="startDate1"
+          endDateId="endDate1"
         />
       </div>
     )
